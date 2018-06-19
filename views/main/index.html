@@ -1,0 +1,32 @@
+{%extends 'layout.html'%}
+{%block contents%}
+    {% for content in contents %}
+    <div class="jumbotron">
+        <h2>{{content.title}}</h2>
+        <p>作者：<span>{{content.user.username}}</span>时间：<span>{{content.addTime | date('Y-m-d H:i:s',-8*60)}}</span>阅读：<span>{{content.views}}</span>评论：<span>{{content.comments.length}}</span></p>
+        <h3>{{content.description}}</h3>
+        <p><a class="btn btn-primary btn-lg" href="/view?contentid={{content.id}}" role="button">阅读全文</a></p>
+    </div>
+    {% endfor %}
+    <nav aria-label="...">
+        <ul class="pager">
+            <li class="previous">
+                {% if page<=1 %}
+                <span class="no-style">没有上一页</span>
+                {% else %}
+                <a href="/?id={{id}}&page={{page-1}}"><span aria-hidden="true">&larr;</span> 上一页</a>
+                {% endif %}
+            </li>
+            {% if page>0 %}
+            <li><strong>{{page}}/{{pages}}</strong></li>
+            {% endif%}
+            <li class="next">
+                {% if page >= pages %}
+                <span class="no-style">没有下一页</span>
+                {% else %}
+                <a href="/?id={{id}}&page={{page+1}}">下一页 <span aria-hidden="true">&rarr;</span></a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+{%endblock%}

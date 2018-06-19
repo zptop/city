@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>国家地理</title>
+    <!-- Bootstrap -->
+    <link href="/public/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/main.css">
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="/public/js/jquery.min.js"></script>
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+    <script src="/public/js/html5shiv.min.js"></script>
+    <script src="/public/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="nav-top">
+    <div class="nav-box clear-fix">
+        <span class="logo">National Geographic</span>
+        <ul class="nav nav-pills">
+            <li role="presentation" class="active"><a href="#">Home</a></li>
+            {% for category in categories %}
+            <li role="presentation"><a href="#">{{category.name}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<div class="banner">
+    <div class="banner-content">
+        {% if userInfo._id %}
+        <div class="form-horizontal login-suc">
+            <div class="col-sm-offset-2 col-sm-10 clear-fix">
+                {% if userInfo.isAdmin %}
+                <span>{{userInfo.username}}</span> <span>你好管理员！</span>
+                <a class="logout-btn" href="javascript:void(0)">退出</a>
+                <a href="../admin" target="_blank">进入后台管理</a>
+                {% else %}
+                <span>{{userInfo.username}}</span> <span>欢迎光临！</span><a class="logout-btn" href="javascript:void(0)">退出</a>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+        <div class="form-horizontal" id="loginBox" style="display: none;">
+            <h3>登录</h3>
+            <div class="form-group">
+                <label for="inputEmail2" class="col-sm-2 control-label">Account</label>
+                <div class="col-sm-10">
+                    <input type="text" name="username" class="form-control" id="inputEmail2" placeholder="Account">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword2" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" name="password" class="form-control" id="inputPassword2" placeholder="Password">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-default sign-in">Sign in</button>
+                    <button class="btn btn-default sign-up">Sign up now</button>
+                </div>
+            </div>
+            <div class="msg-tips"></div>
+        </div>
+        <div class="form-horizontal" id="registerBox">
+            <h3>注册</h3>
+            <div class="form-group">
+                <label for="inputName3" class="col-sm-2 control-label">Account</label>
+                <div class="col-sm-10">
+                    <input type="text" name="username" class="form-control" id="inputName3" placeholder="Account">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" name="password" class="form-control" id="inputPassword3" placeholder="Password">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="rePassword3" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" name="repassword" class="form-control" id="rePassword3" placeholder="Password">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-default sign-up">Sign up</button>
+                    <button class="btn btn-default sign-in">Sign in now</button>
+                </div>
+            </div>
+            <div class="msg-tips"></div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<!--div class="content">
+    <div class="content-box clear-fix">
+        <div class="content-left">
+            <span class="trips">Trips</span>
+            <img src="/public/images/img_31.jpg">
+            <div class="content-text">Donec elementum dui semper, pretium dui quis, pretium nisl. Nunc quis ornare odio.</div>
+            <div class="date-auth">
+                11 septemvber 2016  |   <strong>John Doe</strong>
+            </div>
+        </div>
+        <div class="content-right">
+            <span class="trips black-bg">Trips</span>
+            <img src="/public/images/img_33.jpg">
+            <div class="content-text">Maecenas quis lobortis nunc. Nullam sit amet augue vel odio congue vulputate a ut nisi.</div>
+            <div class="date-auth">
+                14 septemvber 2016  |   <strong>John Doe</strong>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content content-center">
+    <div class="content-box clear-fix">
+        <div class="content-left">
+            <span class="trips">Trips</span>
+            <img src="/public/images/img_12.jpg">
+            <div class="date-auth">
+                11 septemvber 2016  |   <strong>John Doe</strong>
+            </div>
+        </div>
+    </div>
+    <div class="content-box small-content clear-fix">
+        <div class="content-left">
+            <span class="trips">Trips</span>
+            <img src="/public/images/img_15.jpg">
+            <div class="content-text">Donec elementum dui semper, pretium dui quis, pretium nisl. Nunc quis ornare odio.</div>
+            <div class="date-auth">
+                11 septemvber 2016  |   <strong>John Doe</strong>
+            </div>
+        </div>
+        <div class="content-left">
+            <span class="trips">Trips</span>
+            <img src="/public/images/img_17.jpg">
+            <div class="content-text">Maecenas quis lobortis nunc. Nullam sit amet augue vel odio congue vulputate a ut nisi.</div>
+            <div class="date-auth">
+                11 septemvber 2016  |   <strong>John Doe</strong>
+            </div>
+        </div>
+        <div class="content-right">
+            <span class="trips black-bg">Trips</span>
+            <img src="/public/images/img_19.jpg">
+            <div class="content-text">Maecenas quis lobortis nunc. Nullam sit amet augue vel odio congue vulputate a ut nisi.</div>
+            <div class="date-auth">
+                14 septemvber 2016  |   <strong>John Doe</strong>
+            </div>
+        </div>
+    </div>
+    <div class="content-box small-content clear-fix">
+        <div class="content-left">
+            <span class="trips">Trips</span>
+            <img src="/public/images/img_24.jpg">
+            <div class="content-text">Donec elementum dui semper, pretium dui quis, pretium nisl. Nunc quis ornare odio.</div>
+            <div class="date-auth">
+                11 septemvber 2016  |   <strong>John Doe</strong>
+            </div>
+        </div>
+        <div class="content-left">
+            <span class="trips">Trips</span>
+            <img src="/public/images/img_25.jpg">
+            <div class="content-text">Maecenas quis lobortis nunc. Nullam sit amet augue vel odio congue vulputate a ut nisi.</div>
+            <div class="date-auth">
+                11 septemvber 2016  |   <strong>John Doe</strong>
+            </div>
+        </div>
+        <div class="content-right">
+            <span class="trips black-bg">Trips</span>
+            <img src="/public/images/img_26.jpg">
+            <div class="content-text">Maecenas quis lobortis nunc. Nullam sit amet augue vel odio congue vulputate a ut nisi.</div>
+            <div class="date-auth">
+                14 septemvber 2016  |   <strong>John Doe</strong>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="content-box clear-fix">
+        <div class="content-left">
+            <span class="trips">Trips</span>
+            <img src="/public/images/img_31.jpg">
+            <div class="content-text">Donec elementum dui semper, pretium dui quis, pretium nisl. Nunc quis ornare odio.</div>
+            <div class="date-auth">
+                11 septemvber 2016  |   <strong>John Doe</strong>
+            </div>
+        </div>
+        <div class="content-right">
+            <span class="trips black-bg">Trips</span>
+            <img src="/public/images/img_33.jpg">
+            <div class="content-text">Maecenas quis lobortis nunc. Nullam sit amet augue vel odio congue vulputate a ut nisi.</div>
+            <div class="date-auth">
+                14 septemvber 2016  |   <strong>John Doe</strong>
+            </div>
+        </div>
+    </div>
+</div-->
+<div class="content-list">
+    <div class="nav nav-pills">
+        {% if id=='' %}
+        <a href="/" class="on">首页</a>
+        {% else %}
+        <a href="/">首页</a>
+        {% endif %}
+
+        {% for category in categories %}
+        {% if id == category.id %}
+        <a href="/?id={{category.id}}" class="on">{{category.name}}</a>
+        {% else %}
+        <a href="/?id={{category.id}}">{{category.name}}</a>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {%block contents%}
+    {%endblock%}
+</div>
+<div class="footer">
+    <div class="footer-content">
+        <p class="footer-text">
+            <span>Newsletter</span>
+            Donec elementum dui semper, pretium dui quis, pretium nisl.
+        </p>
+    </div>
+</div>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script src="/public/js/bootstrap.min.js"></script>
+<script src="/public/js/index.js"></script>
+</body>
+</html>

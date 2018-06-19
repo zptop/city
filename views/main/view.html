@@ -1,0 +1,33 @@
+{%extends 'layout.html'%}
+{%block contents%}
+<div class="jumbotron">
+    <h2>{{content.title}}</h2>
+    <p>作者：<span>{{userInfo.username}}</span>时间：<span>{{content.addTime | date('Y-m-d H:i:s',-8*60)}}</span>阅读：<span>{{content.views}}</span>评论：<span>{{content.comments.length}}</span></p>
+    <p class="content">{{content.content}}</p>
+</div>
+<div class="comment">
+    <div class="comment-title clear-fix">
+        <h3>评论</h3>
+    </div>
+    {% if userInfo._id %}
+    <h4>{{userInfo.username}}</h4>
+    <div class="input-group">
+        <textarea style="resize: none;" name="" rows="5" class="form-control" id="messageContent"></textarea>
+        <input type="hidden" id="contentId" value="{{content.id}}">
+        <span class="input-group-addon" id="basic-addon2">提交评论</span>
+    </div>
+    {% else %}
+    <a href="" class="no-sign-in">您还没有登录，请先登录</a>
+    {% endif %}
+    <span class="no-leave-comments">还没有留言</span>
+    <div class="comment-list"></div>
+    <nav aria-label="...">
+        <ul class="pager">
+            <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+            <li></li>
+            <li class="next"><a href="#">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+        </ul>
+    </nav>
+</div>
+<script src="/public/js/comment.js"></script>
+{%endblock%}
